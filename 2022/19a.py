@@ -1,6 +1,7 @@
 # https://adventofcode.com/2022/day/19
-# this takes about 35.5 minutes for my input on my W550s
-# a much more efficient solution is available in 19b.py
+# a much more efficient solution than 19.py, based on this crucial insight that I missed:
+# "I don’t build robots I don’t need. e.g. if the geode robots cost x obsidian I will never build more than x obsidian miners."
+# https://old.reddit.com/r/adventofcode/comments/zpihwi/2022_day_19_solutions/j11kdm9/
 
 import sys
 
@@ -15,7 +16,7 @@ def do_blueprint(minute, materials, robots, next_robot):
     if minute == 23:
         max_geodes = max(max_geodes, materials[3] + robots[3])
         return
-    new_materials = [materials[j] for j in range(4)]
+    new_materials = [m for m in materials]
     new_minute = minute
     while new_materials[0] < blueprints[i][next_robot][0] or new_materials[1] < blueprints[i][next_robot][1] or new_materials[2] < blueprints[i][next_robot][2]:
         new_materials = [new_materials[j] + robots[j] for j in range(4)]
@@ -26,10 +27,11 @@ def do_blueprint(minute, materials, robots, next_robot):
     new_materials = [new_materials[j] + robots[j] for j in range(4)]
     for j in range(3):
         new_materials[j] -= blueprints[i][next_robot][j]
-    new_robots = [robots[j] for j in range(4)]
+    new_robots = [r for r in robots]
     new_robots[next_robot] += 1
     for k in range(4):
-        do_blueprint(new_minute + 1, new_materials, new_robots, k)
+        if k == 3 or new_robots[k] < max([blueprints[i][z][k] for z in range(k, 4)]):
+            do_blueprint(new_minute + 1, [nm for nm in new_materials], [nr for nr in new_robots], k)
 
 
 total_quality = 0
