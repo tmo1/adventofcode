@@ -1,4 +1,4 @@
-# https://adventofcode.com/2022/day/17
+# https://adventofcode.com/2022/day/17#part2
 # I couldn't figure this one out, and it took me a while even after reading
 # https://www.reddit.com/r/adventofcode/comments/znykq2/2022_day_17_solutions/
 # I finally coded the following solution based on this post:
