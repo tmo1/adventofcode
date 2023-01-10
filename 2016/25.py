@@ -1,5 +1,11 @@
 # https://adventofcode.com/2016/day/25
 
+# This code could conceivably yield a false positive if the input contains 'tgl' instructions (my input does not),
+# since the state tuples only include the registers and instruction pointer, not the program code itself.
+# Additionally, it could fail to terminate at all if a correct clock sequence is encountered without a return to a
+# previous program state (e.g., if one of the registers is incremented for each clock tick).
+# Furthermore, it only tracks the state of registers a-d (the only ones utilized in at least my input).
+
 import sys
 
 registers, program, states, n = [0 for i in range(26)], [line.split() for line in sys.stdin], {}, 0
